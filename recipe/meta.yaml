@@ -1,5 +1,5 @@
 {% set name = "turbo-seti" %}
-{% set version = "2.2.4" %}
+{% set version = "2.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/turbo_seti-{{ version }}.tar.gz
-  sha256: a3487619f229e21eebaeef7e7273044c93f0a633f2bc969528c9c4b4fa238a83
+  sha256: 7690f024e1ab72672cc7cf0909ab6a1c6643e5833ff82b3d5a5111611f2c05ef
 
 build:
   entry_points:
@@ -16,7 +16,7 @@ build:
     - dat_filter = turbo_seti.find_event.dat_filter:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
+  number: 0
 
 requirements:
   host:
