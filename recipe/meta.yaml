@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/turbo_seti-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/turbo_seti-{{ version }}.tar.gz
   sha256: aa74855d0b8c6ce5c6f6829d3a46d52a1a28813b9c5522546d8b6338e20f826a
 
 build:
@@ -16,14 +16,15 @@ build:
     - dat_filter = turbo_seti.find_event.dat_filter:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
     - python >=3.6
+    - setuptools
   run:
-    - astropy
+    - astropy-base
     - blimpy >=2.0.34
     - cloudpickle
     - dask-core
