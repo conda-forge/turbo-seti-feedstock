@@ -1,0 +1,67 @@
+schema_version: 1
+
+context:
+  name: turbo-seti
+  version: "2.3.2"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/turbo_seti-${{ version }}.tar.gz
+  sha256: aa74855d0b8c6ce5c6f6829d3a46d52a1a28813b9c5522546d8b6338e20f826a
+
+build:
+  number: 3
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - turboSETI = turbo_seti.find_doppler.seti_event:main
+      - plotSETI = turbo_seti.find_event.run_pipelines:main
+      - dat_filter = turbo_seti.find_event.dat_filter:main
+
+requirements:
+  host:
+    - pip
+    - python ${{ python_min }}.*
+    - setuptools <80
+  run:
+    - astropy-base
+    - blimpy >=2.0.34
+    - cloudpickle
+    - dask-core
+    - fsspec
+    - numba
+    - numpy
+    - pandas
+    - python >=${{ python_min }}
+    - toolz
+
+tests:
+  - python:
+      imports:
+        - turbo_seti
+      pip_check: true
+      python_version:
+        - ${{ python_min }}
+        - "*"
+  - requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+    script:
+      - turboSETI --help
+      - plotSETI --help
+      - dat_filter --help
+
+about:
+  summary: Analysis tool for the search of narrow band drifting signals in filterbank data
+  license: MIT
+  license_file: LICENSE
+  homepage: https://github.com/UCBerkeleySETI/turbo_seti
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
