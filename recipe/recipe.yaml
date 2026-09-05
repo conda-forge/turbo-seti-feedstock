@@ -15,7 +15,7 @@ source:
 build:
   number: 3
   noarch: python
-  script: ${{ PYTHON }} -m pip install . -vv
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   python:
     entry_points:
       - turboSETI = turbo_seti.find_doppler.seti_event:main
@@ -44,7 +44,9 @@ tests:
       imports:
         - turbo_seti
       pip_check: true
-      python_version: ${{ python_min }}
+      python_version:
+        - ${{ python_min }}
+        - "*"
   - requirements:
       run:
         - pip
